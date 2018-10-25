@@ -10,10 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_17_153746) do
+ActiveRecord::Schema.define(version: 2018_10_24_134126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "articles", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_articles_on_user_id"
+  end
+
+  create_table "permissions", force: :cascade do |t|
+    t.string "action"
+    t.bigint "article_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_permissions_on_article_id"
+  end
+
+  create_table "user_permissions", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "permission_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["permission_id"], name: "index_user_permissions_on_permission_id"
+    t.index ["user_id"], name: "index_user_permissions_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -28,4 +54,8 @@ ActiveRecord::Schema.define(version: 2018_10_17_153746) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "articles", "users"
+  add_foreign_key "permissions", "articles", on_delete: :cascade
+  add_foreign_key "user_permissions", "permissions", on_delete: :cascade
+  add_foreign_key "user_permissions", "users", on_delete: :cascade
 end
