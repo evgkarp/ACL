@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
   respond_to :html, :json, :js
 
-  before_action :authenticate_user!, except: %i[index show]
+  before_action :authenticate_user!, except: :index
   before_action :set_article, only: %i[show edit update destroy]
 
   def index
@@ -21,6 +21,7 @@ class ArticlesController < ApplicationController
   end
 
   def edit
+    authorize @article
   end
 
   def create
@@ -35,6 +36,7 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
+    authorize @article
     @article.destroy
     respond_with(@article, location: articles_url)
   end

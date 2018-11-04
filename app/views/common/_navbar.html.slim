@@ -1,20 +1,20 @@
-nav class="navbar navbar-expand-lg navbar-light bg-light"
-  a class="navbar-brand" href="/" ACL
-  button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-    span class="navbar-toggler-icon"
-  div class="collapse navbar-collapse" id="navbarSupportedContent"
-    div class="navbar-nav"
-      div class="nav-item nav-link"
-        = link_to "Articles", articles_path
-      div class="nav-item nav-link"
+nav.navbar.navbar-expand-lg.navbar-light.bg-light
+  a.navbar-brand href="/" ACL
+  button.navbar-toggler type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+    span.navbar-toggler-icon
+  .collapse.navbar-collapse id="navbarSupportedContent"
+    .navbar-nav
+      .nav-item.nav-link
+        = link_to "All Articles", articles_path
+      .nav-item.nav-link
         = link_to 'Create article', new_article_path
-      div class="nav-item nav-link"
+      .nav-item.nav-link
         = link_to "Sign Up", new_user_registration_path
 
       - if user_signed_in?
-        div class="nav-item nav-link"
+        .nav-item.nav-link
           = link_to "Log out", destroy_user_session_path, method: :delete
       - else
-        div class="nav-item nav-link"
+        .nav-item.nav-link
           = link_to "Log In", new_user_session_path
 

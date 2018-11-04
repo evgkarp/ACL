@@ -1,7 +1,7 @@
 class Permission < ApplicationRecord
-  ACTIONS = ['show', 'update'].freeze
+  ACTIONS = %i[read write].freeze
 
-  belongs_to :article
-  has_many :user_permissions
+  belongs_to :permissible, polymorphic: true, optional: true
+  has_many :user_permissions, dependent: :destroy
   has_many :users, through: :user_permissions
 end

@@ -3,7 +3,10 @@ class CreatePermissions < ActiveRecord::Migration[5.2]
     create_table :permissions do |t|
       t.string :action
 
-      t.belongs_to :article, foreign_key: { on_delete: :cascade }, index: true
+      t.string :permissible_type
+      t.bigint :permissible_id
+
+      t.belongs_to :permissible, polymorphic: true, index: true
 
       t.timestamps
     end

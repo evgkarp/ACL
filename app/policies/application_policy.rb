@@ -1,49 +1,25 @@
 class ApplicationPolicy
-  # attr_reader :user, :record
+  attr_reader :user, :permissible
 
-  # def initialize(user, record)
-  #   @user = user
-  #   @record = record
-  # end
+  def initialize(user, permissible)
+    raise Pundit::NotAuthorizedError, 'must be logged in' unless user
+    @user = user
+    @permissible = permissible
+  end
 
-  # def index?
-  #   false
-  # end
+  def show?
+    @user.can_read?(@permissible) || update?
+  end
 
-  # def show?
-  #   false
-  # end
+  def update?
+    @user.can_write?(@permissible)
+  end
 
-  # def create?
-  #   false
-  # end
+  def edit?
+    update?
+  end
 
-  # def new?
-  #   create?
-  # end
-
-  # def update?
-  #   false
-  # end
-
-  # def edit?
-  #   update?
-  # end
-
-  # def destroy?
-  #   false
-  # end
-
-  # class Scope
-  #   attr_reader :user, :scope
-
-  #   def initialize(user, scope)
-  #     @user = user
-  #     @scope = scope
-  #   end
-
-  #   def resolve
-  #     scope.all
-  #   end
-  # end
+  def destroy?
+    update?
+  end
 end

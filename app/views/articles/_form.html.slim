@@ -14,18 +14,20 @@
 
           = f.hidden_field :user_id, value: current_user.id
 
-      .row
-        .col
-          p The assignment of access rights
-
-      .row
-        = f.fields_for :permissions do |i|
+      - if current_user.author_of?(article)
+        .row
           .col
-            = i.label :action
-            = i.text_field :action, readonly: true
-            = i.label :user_ids, 'Users, who can do this aciton'
-            = i.collection_select :user_ids, User.all, :id, :email, {}, { multiple: true, class: 'form-control' }
+            p The assignment of access rights
+
+        .row
+          = f.fields_for :permissions do |i|
+            .col
+              = i.label :action
+              = i.text_field :action, readonly: true
+              = i.label :user_ids, 'Users, who can do this aciton'
+              = i.collection_select :user_ids, User.all, :id, :name, {},
+                { multiple: true, class: 'form-control permission' }
 
       .row
         .col
-          = f.submit "#{ article.new_record? ? 'Create' : 'Save' }"
+          = f.submit "#{article.new_record? ? 'Create' : 'Save'}"
