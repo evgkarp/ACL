@@ -1,0 +1,23 @@
+- if !user_signed_in?
+  h1 Welcome to the Blog
+  p= link_to "please log in to continue", new_user_session_path
+- else
+  .row
+    .col
+      = button_to 'Show only my articles', '', class: 'my-articles'
+    .col
+      = button_to 'Show only articles I can edit', '', class: 'editable-articles'
+  hr
+  .row.articles
+    .col Title
+    .col Author
+  hr
+  - @articles.each do |article|
+    - if policy(article).show?
+      div class=([('author' if current_user.author_of?(article)),
+            ('editable' if policy(article).update?),
+            'article row'].compact.join(' '))
+        .col
+          p= link_to article.title, article_path(article)
+        .col
+          p= article.user.name
