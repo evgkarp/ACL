@@ -1,24 +1,13 @@
-# README
+# Блог
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Пользователь может:
+  - зарегистрироваться, войти, выйти (Devise).
+  
+Аутентифицированный пользователь может:
+  - создавать статьи;
+  - просматривать или редактировать статьи, если автор предоставил ему соответствующие разрешение.
+  
+Автор:
+  - может назначать различные права доступа (чтение, редактирование) к своей статье каждому конкретному пользователю. 
+  
+Были применены: авторизация через Pundit, стилизация с помощью Bootstrap.
